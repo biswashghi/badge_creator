@@ -1,7 +1,7 @@
 # Badge Creator
 
 Start deployment from:
-- [/Users/biswash/Documents/repos/hetzner_tf/README.md](/Users/biswash/Documents/repos/hetzner_tf/README.md)
+- [Hetzner deployment runbook](https://github.com/biswashghi/hetzner_tf/blob/main/README.md)
 
 This repo deploys as a static site. The root page is:
 - [/Users/biswash/Documents/repos/badge_creator/index.html](/Users/biswash/Documents/repos/badge_creator/index.html)
