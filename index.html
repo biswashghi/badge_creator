@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MSU WorldTAP Avery 5392 Vertical Name Badges</title>
+  <style>
+    @page {
+      size: 8.5in 11in;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f4f6;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      width: 8.5in;
+      margin: 0 auto;
+      padding: 12px 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      background: #f3f4f6;
+    }
+
+    .toolbar .spacer {
+      flex: 1;
+    }
+
+    .print-note {
+      width: 8.5in;
+      margin: 0 auto 10px;
+      color: #374151;
+      font: 13px Arial, Helvetica, sans-serif;
+    }
+
+    .editor {
+      width: 8.5in;
+      margin: 0 auto 10px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #d8dde6;
+      border-radius: 8px;
+    }
+
+    .editor label {
+      display: grid;
+      gap: 4px;
+      color: #374151;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .editor textarea {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid #b8bec8;
+      border-radius: 6px;
+      color: #111827;
+      font: 14px Arial, Helvetica, sans-serif;
+      padding: 7px 8px;
+    }
+
+    .editor textarea {
+      min-height: 92px;
+      resize: vertical;
+      text-transform: none;
+    }
+
+    .csv-header {
+      border: 1px solid #b8bec8;
+      border-bottom: 0;
+      border-radius: 6px 6px 0 0;
+      background: #eef2f7;
+      color: #111827;
+      font: 13px Arial, Helvetica, sans-serif;
+      padding: 7px 8px;
+      text-transform: none;
+      user-select: all;
+    }
+
+    .csv-hint,
+    .csv-status {
+      color: #4b5563;
+      font: 12px Arial, Helvetica, sans-serif;
+      text-transform: none;
+    }
+
+    .csv-wide textarea {
+      border-radius: 0 0 6px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    .editor .csv-wide {
+      grid-column: span 5;
+    }
+
+    .editor .csv-actions {
+      align-self: end;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    button {
+      border: 1px solid #b8bec8;
+      border-radius: 6px;
+      background: #fff;
+      color: #111827;
+      cursor: pointer;
+      font: 700 14px Arial, Helvetica, sans-serif;
+      padding: 8px 12px;
+    }
+
+    button:hover {
+      background: #eef2f7;
+    }
+
+    .sheet {
+      position: relative;
+      width: 8.5in;
+      height: 11in;
+      margin: 0 auto;
+      padding: 0;
+      background: #fff;
+      break-after: page;
+      page-break-after: always;
+    }
+
+    .sheet:last-of-type {
+      break-after: auto;
+      page-break-after: auto;
+    }
+
+    .slot {
+      position: absolute;
+      width: 4in;
+      height: 3in;
+      overflow: hidden;
+      background: #fff;
+      border: 0.5px dashed rgba(0, 0, 0, 0.28);
+    }
+
+    .slot:nth-of-type(1) {
+      left: 0.25in;
+      top: 1in;
+    }
+
+    .slot:nth-of-type(2) {
+      left: 4.25in;
+      top: 1in;
+    }
+
+    .slot:nth-of-type(3) {
+      left: 0.25in;
+      top: 4in;
+    }
+
+    .slot:nth-of-type(4) {
+      left: 4.25in;
+      top: 4in;
+    }
+
+    .slot:nth-of-type(5) {
+      left: 0.25in;
+      top: 7in;
+    }
+
+    .slot:nth-of-type(6) {
+      left: 4.25in;
+      top: 7in;
+    }
+
+    .badge {
+      position: absolute;
+      left: 0.5in;
+      top: -0.5in;
+      width: 3in;
+      height: 4in;
+      overflow: hidden;
+      background: #fff;
+      transform: rotate(90deg);
+      transform-origin: center;
+    }
+
+    .top {
+      position: relative;
+      height: 2.55in;
+      background: transparent;
+      color: #fff;
+      text-align: center;
+      padding: 0.18in 0.14in 0;
+    }
+
+    .logos {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 0.48in 1fr 0.48in;
+      align-items: start;
+      gap: 0.08in;
+      height: 0.56in;
+    }
+
+    .seal,
+    .worldtap {
+      width: 0.48in;
+      height: 0.48in;
+      object-fit: contain;
+    }
+
+    .lockup {
+      width: 1.74in;
+      height: 0.43in;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .event-copy {
+      position: relative;
+      z-index: 2;
+      padding-top: 0.0in;
+      width: calc(100% + 0.24in);
+      margin-left: -0.12in;
+    }
+
+    .host {
+      margin: 0;
+      font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+      font-size: 12.4px;
+      line-height: 1.24;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .program {
+      margin: 0.22in 0 0;
+      color: #ffd85b;
+      font-size: 21px;
+      line-height: 1.18;
+      font-weight: 800;
+    }
+
+    .date,
+    .place {
+      margin: 0.16in 0 0;
+      font-size: 12px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .place {
+      margin-top: 0.12in;
+    }
+
+    .lime-point,
+    .green-point {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2.7in;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 0.62in), 50% 100%, 0 calc(100% - 0.62in));
+    }
+
+    .lime-point {
+      top: 0.1in;
+      background: #b6ff58;
+      z-index: 0;
+    }
+
+    .green-point {
+      background: #236b31;
+      z-index: 1;
+    }
+
+    .name-area {
+      height: 1.45in;
+      padding: 0.28in 0.15in 0;
+      text-align: center;
+      background: #fff;
+    }
+
+    .short-name {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .full-name {
+      margin: 0.13in 0 0;
+      font-size: 19px;
+      line-height: 1.08;
+      font-weight: 800;
+    }
+
+    .organization {
+      margin: 0.1in 0 0;
+      font-size: 18px;
+      line-height: 1.08;
+      font-weight: 800;
+    }
+
+    .variant {
+      display: none;
+    }
+
+    .name-area[data-variant="org"] .variant-org,
+    .name-area[data-variant="flag"] .variant-flag {
+      display: block;
+    }
+
+    .flag-name {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.05;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .country-flag {
+      display: block;
+      width: 1.25in;
+      max-height: 0.68in;
+      margin: 0.2in auto 0;
+      object-fit: contain;
+    }
+
+    .hide-guides .slot {
+      border-color: transparent;
+    }
+
+    @media print {
+      html,
+      body {
+        width: 8.5in;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff;
+      }
+
+      .toolbar,
+      .print-note {
+        display: none;
+      }
+
+      .editor {
+        display: none;
+      }
+
+      .sheet {
+        position: relative;
+        width: 8.5in !important;
+        height: 11in !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden;
+        break-after: page;
+        page-break-after: always;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .sheet:last-of-type {
+        break-after: auto;
+        page-break-after: auto;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button type="button" id="print-button">Print</button>
+    <button type="button" id="toggle-guides">Hide cut lines</button>
+    <span class="spacer"></span>
+    <button type="button" id="reset-edits">Reset badges</button>
+  </div>
+  <div class="print-note">For Avery 5392, print at 100% scale / actual size, margins none, headers and footers off, and background graphics on.</div>
+  <form class="editor" id="badge-editor">
+    <label class="csv-wide">
+      CSV rows
+      <div class="csv-header" id="csv-header">type,full_name,country_code,first_name,organization,flag_url</div>
+      <textarea id="csv-text" spellcheck="false" aria-describedby="csv-hint">flag,Karim Maredia,us,,,
+flag,Linza Binti Md Yassin,my,,,
+org,Karim Maredia,,KARIM,Michigan State University,</textarea>
+      <span class="csv-hint" id="csv-hint">Rows only. Use type flag for full name + flag, or org for first/full/organization.</span>
+      <span class="csv-status" id="csv-status">CSV rows are ready to import.</span>
+    </label>
+    <div class="csv-actions">
+      <button type="button" id="import-csv-text">Import CSV text</button>
+      <button type="button" id="load-sample-csv">Load sample</button>
+      <button type="button" id="clear-csv-text">Clear CSV</button>
+    </div>
+  </form>
+  <main class="sheet">
+    <section class="slot">
+      <div class="badge">
+        <div class="top">
+          <div class="logos">
+            <img class="seal" src="assets/msu-seal.png" alt="Michigan State University seal">
+            <img class="lockup" src="assets/canr-lockup.png" alt="College of Agriculture and Natural Resources">
+            <img class="worldtap" src="assets/worldtap-logo.png" alt="WorldTAP logo">
+          </div>
+          <div class="event-copy">
+            <p class="host">Michigan State University<br>College of Agriculture and Natural Resources</p>
+            <p class="program">International Food Safety<br>Program</p>
+            <p class="date">JULY 20 - 24, 2026</p>
+            <p class="place">EAST LANSING, MICHIGAN, USA</p>
+          </div>
+          <div class="lime-point"></div>
+          <div class="green-point"></div>
+        </div>
+        <div class="name-area">
+          <p class="short-name"></p>
+          <p class="full-name"></p>
+          <p class="organization"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slot">
+      <div class="badge">
+        <div class="top">
+          <div class="logos">
+            <img class="seal" src="assets/msu-seal.png" alt="Michigan State University seal">
+            <img class="lockup" src="assets/canr-lockup.png" alt="College of Agriculture and Natural Resources">
+            <img class="worldtap" src="assets/worldtap-logo.png" alt="WorldTAP logo">
+          </div>
+          <div class="event-copy">
+            <p class="host">Michigan State University<br>College of Agriculture and Natural Resources</p>
+            <p class="program">International Food Safety<br>Program</p>
+            <p class="date">JULY 20 - 24, 2026</p>
+            <p class="place">EAST LANSING, MICHIGAN, USA</p>
+          </div>
+          <div class="lime-point"></div>
+          <div class="green-point"></div>
+        </div>
+        <div class="name-area">
+          <p class="short-name"></p>
+          <p class="full-name"></p>
+          <p class="organization"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slot">
+      <div class="badge">
+        <div class="top">
+          <div class="logos">
+            <img class="seal" src="assets/msu-seal.png" alt="Michigan State University seal">
+            <img class="lockup" src="assets/canr-lockup.png" alt="College of Agriculture and Natural Resources">
+            <img class="worldtap" src="assets/worldtap-logo.png" alt="WorldTAP logo">
+          </div>
+          <div class="event-copy">
+            <p class="host">Michigan State University<br>College of Agriculture and Natural Resources</p>
+            <p class="program">International Food Safety<br>Program</p>
+            <p class="date">JULY 20 - 24, 2026</p>
+            <p class="place">EAST LANSING, MICHIGAN, USA</p>
+          </div>
+          <div class="lime-point"></div>
+          <div class="green-point"></div>
+        </div>
+        <div class="name-area">
+          <p class="short-name"></p>
+          <p class="full-name"></p>
+          <p class="organization"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slot">
+      <div class="badge">
+        <div class="top">
+          <div class="logos">
+            <img class="seal" src="assets/msu-seal.png" alt="Michigan State University seal">
+            <img class="lockup" src="assets/canr-lockup.png" alt="College of Agriculture and Natural Resources">
+            <img class="worldtap" src="assets/worldtap-logo.png" alt="WorldTAP logo">
+          </div>
+          <div class="event-copy">
+            <p class="host">Michigan State University<br>College of Agriculture and Natural Resources</p>
+            <p class="program">International Food Safety<br>Program</p>
+            <p class="date">JULY 20 - 24, 2026</p>
+            <p class="place">EAST LANSING, MICHIGAN, USA</p>
+          </div>
+          <div class="lime-point"></div>
+          <div class="green-point"></div>
+        </div>
+        <div class="name-area">
+          <p class="short-name"></p>
+          <p class="full-name"></p>
+          <p class="organization"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slot">
+      <div class="badge">
+        <div class="top">
+          <div class="logos">
+            <img class="seal" src="assets/msu-seal.png" alt="Michigan State University seal">
+            <img class="lockup" src="assets/canr-lockup.png" alt="College of Agriculture and Natural Resources">
+            <img class="worldtap" src="assets/worldtap-logo.png" alt="WorldTAP logo">
+          </div>
+          <div class="event-copy">
+            <p class="host">Michigan State University<br>College of Agriculture and Natural Resources</p>
+            <p class="program">International Food Safety<br>Program</p>
+            <p class="date">JULY 20 - 24, 2026</p>
+            <p class="place">EAST LANSING, MICHIGAN, USA</p>
+          </div>
+          <div class="lime-point"></div>
+          <div class="green-point"></div>
+        </div>
+        <div class="name-area">
+          <p class="short-name"></p>
+          <p class="full-name"></p>
+          <p class="organization"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slot">
+      <div class="badge">
+        <div class="top">
+          <div class="logos">
+            <img class="seal" src="assets/msu-seal.png" alt="Michigan State University seal">
+            <img class="lockup" src="assets/canr-lockup.png" alt="College of Agriculture and Natural Resources">
+            <img class="worldtap" src="assets/worldtap-logo.png" alt="WorldTAP logo">
+          </div>
+          <div class="event-copy">
+            <p class="host">Michigan State University<br>College of Agriculture and Natural Resources</p>
+            <p class="program">International Food Safety<br>Program</p>
+            <p class="date">JULY 20 - 24, 2026</p>
+            <p class="place">EAST LANSING, MICHIGAN, USA</p>
+          </div>
+          <div class="lime-point"></div>
+          <div class="green-point"></div>
+        </div>
+        <div class="name-area">
+          <p class="short-name"></p>
+          <p class="full-name"></p>
+          <p class="organization"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const badgesPerPage = 6;
+    const badgeStorageKey = "msu-worldtap-avery-5392-badges-v3";
+    const defaultFlagSvg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 140">
+        <rect width="280" height="140" fill="#fff"/>
+        <g fill="#d50000">
+          <rect width="280" height="10" y="0"/>
+          <rect width="280" height="10" y="20"/>
+          <rect width="280" height="10" y="40"/>
+          <rect width="280" height="10" y="60"/>
+          <rect width="280" height="10" y="80"/>
+          <rect width="280" height="10" y="100"/>
+          <rect width="280" height="10" y="120"/>
+        </g>
+        <rect width="126" height="80" fill="#010066"/>
+        <circle cx="51" cy="40" r="29" fill="#ffd100"/>
+        <circle cx="61" cy="40" r="25" fill="#010066"/>
+        <path fill="#ffd100" d="M87 18l5.8 15.1 14.9-6.2-6.2 14.9 15.1 5.8-15.1 5.8 6.2 14.9-14.9-6.2L87 77l-5.8-14.9-14.9 6.2 6.2-14.9-15.1-5.8 15.1-5.8-6.2-14.9 14.9 6.2z"/>
+      </svg>`;
+    const defaultFlagUrl = `data:image/svg+xml,${encodeURIComponent(defaultFlagSvg)}`;
+    const sampleCsvRows = `flag,Karim Maredia,us,,,
+flag,Linza Binti Md Yassin,my,,,
+org,Karim Maredia,,KARIM,Michigan State University,`;
+
+    const initialSheet = document.querySelector(".sheet");
+    while (initialSheet.querySelectorAll(".slot").length < badgesPerPage) {
+      initialSheet.appendChild(initialSheet.querySelector(".slot:last-of-type").cloneNode(true));
+    }
+
+    const sheetTemplate = initialSheet.cloneNode(true);
+    const csvHeader = document.getElementById("csv-header").textContent.trim();
+    const csvTextInput = document.getElementById("csv-text");
+    const csvStatus = document.getElementById("csv-status");
+    let slots = [];
+
+    function createBlankBadge() {
+      return {
+        type: "flag",
+        short: "",
+        full: "",
+        organization: "",
+        flagUrl: "",
+      };
+    }
+
+    function flagUrlFromCountry(value) {
+      const aliases = {
+        malaysia: "my",
+        usa: "us",
+        "united states": "us",
+        "united states of america": "us",
+        uk: "gb",
+        "united kingdom": "gb",
+        england: "gb-eng",
+        scotland: "gb-sct",
+        wales: "gb-wls",
+      };
+      const normalized = String(value || "").trim().toLowerCase();
+      const code = aliases[normalized] || normalized;
+      if (!/^[a-z]{2}(-[a-z]{3})?$/.test(code)) {
+        return "";
+      }
+      return `https://flagcdn.com/${code}.svg`;
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let field = "";
+      let inQuotes = false;
+
+      for (let index = 0; index < text.length; index += 1) {
+        const char = text[index];
+        const nextChar = text[index + 1];
+
+        if (char === '"' && inQuotes && nextChar === '"') {
+          field += '"';
+          index += 1;
+        } else if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === "," && !inQuotes) {
+          row.push(field.trim());
+          field = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && nextChar === "\n") {
+            index += 1;
+          }
+          row.push(field.trim());
+          if (row.some((cell) => cell !== "")) {
+            rows.push(row);
+          }
+          row = [];
+          field = "";
+        } else {
+          field += char;
+        }
+      }
+
+      row.push(field.trim());
+      if (row.some((cell) => cell !== "")) {
+        rows.push(row);
+      }
+
+      if (rows.length < 2) {
+        return [];
+      }
+
+      const headers = rows[0].map((header) => header.trim().toLowerCase().replace(/\s+/g, "_"));
+      return rows.slice(1).map((cells) => {
+        const item = {};
+        headers.forEach((header, index) => {
+          item[header] = cells[index] || "";
+        });
+        return item;
+      });
+    }
+
+    function rowValue(row, names) {
+      const key = names.find((name) => row[name] !== undefined && row[name] !== "");
+      return key ? row[key] : "";
+    }
+
+    function badgeFromCsvRow(row, index) {
+      const first = rowValue(row, ["first_name", "first", "short_name", "given_name"]);
+      const full = rowValue(row, ["full_name", "name", "participant", "participant_name"]);
+      const organization = rowValue(row, ["organization", "organisation", "org", "institution", "affiliation"]);
+      const flagUrl = rowValue(row, ["flag_url", "flag", "image_url"]);
+      const country = rowValue(row, ["country_code", "country", "country_name", "flag_code"]);
+      const requestedType = rowValue(row, ["type", "badge_type"]).toLowerCase();
+      const resolvedFlagUrl = flagUrl || flagUrlFromCountry(country);
+      const type = requestedType === "org" || requestedType === "organization" ? "org" : "flag";
+
+      return {
+        type,
+        short: first || full.split(/\s+/)[0]?.toUpperCase() || "",
+        full,
+        organization,
+        flagUrl: resolvedFlagUrl,
+      };
+    }
+
+    function collectElements() {
+      slots = [...document.querySelectorAll(".slot")];
+    }
+
+    collectElements();
+    const csvSeedRows = parseCsv(`${csvHeader}\n${csvTextInput.value}`);
+    const csvSeedBadges = csvSeedRows.map((row, index) => badgeFromCsvRow(row, index));
+    while (csvSeedBadges.length % badgesPerPage !== 0) {
+      csvSeedBadges.push(createBlankBadge());
+    }
+    let badges = JSON.parse(localStorage.getItem(badgeStorageKey) || "null") || csvSeedBadges;
+
+    function appendSheet() {
+      const nextSheet = sheetTemplate.cloneNode(true);
+      document.body.insertBefore(nextSheet, document.querySelector("script"));
+      collectElements();
+      return nextSheet;
+    }
+
+    function ensureSheetsForBadges() {
+      while (slots.length < badges.length) {
+        appendSheet();
+      }
+    }
+
+    function trimExtraSheets() {
+      while (document.querySelectorAll(".sheet").length > Math.ceil(badges.length / badgesPerPage)) {
+        const sheets = document.querySelectorAll(".sheet");
+        sheets[sheets.length - 1].remove();
+      }
+      collectElements();
+    }
+
+    function buildBadgeVariants() {
+      slots.forEach((slot) => {
+        const nameArea = slot.querySelector(".name-area");
+        if (nameArea.dataset.variantsBuilt === "true") {
+          return;
+        }
+        const original = [...nameArea.children];
+        const orgVariant = document.createElement("div");
+        orgVariant.className = "variant variant-org";
+        original.forEach((child) => orgVariant.appendChild(child));
+
+        const flagVariant = document.createElement("div");
+        flagVariant.className = "variant variant-flag";
+        flagVariant.innerHTML = `
+          <p class="flag-name"></p>
+          <img class="country-flag" alt="Country flag">
+        `;
+
+        nameArea.appendChild(orgVariant);
+        nameArea.appendChild(flagVariant);
+        nameArea.dataset.variantsBuilt = "true";
+      });
+    }
+
+    function saveBadges() {
+      localStorage.setItem(badgeStorageKey, JSON.stringify(badges));
+    }
+
+    function renderBadge(index) {
+      const slot = slots[index];
+      const badge = badges[index];
+      if (!slot || !badge) {
+        return;
+      }
+      const nameArea = slot.querySelector(".name-area");
+      nameArea.dataset.variant = badge.type;
+      nameArea.querySelector(".short-name").textContent = badge.short;
+      nameArea.querySelector(".full-name").textContent = badge.full;
+      nameArea.querySelector(".organization").textContent = badge.organization;
+      nameArea.querySelector(".flag-name").textContent = badge.full;
+      const flagImage = nameArea.querySelector(".country-flag");
+      flagImage.src = badge.flagUrl || "";
+      flagImage.style.visibility = badge.flagUrl ? "visible" : "hidden";
+    }
+
+    function renderAllBadges() {
+      badges.forEach((_, index) => renderBadge(index));
+    }
+
+    function importCsvText() {
+      const rows = parseCsv(`${csvHeader}\n${csvTextInput.value}`);
+      if (!rows.length) {
+        csvStatus.textContent = "No CSV rows found.";
+        return;
+      }
+      badges = rows.map((row, index) => badgeFromCsvRow(row, index));
+      while (badges.length % badgesPerPage !== 0) {
+        badges.push(createBlankBadge());
+      }
+      trimExtraSheets();
+      ensureSheetsForBadges();
+      initializePage();
+      saveBadges();
+      csvStatus.textContent = `Imported ${rows.length} row${rows.length === 1 ? "" : "s"} across ${Math.ceil(badges.length / badgesPerPage)} page${badges.length <= badgesPerPage ? "" : "s"}.`;
+    }
+
+    function initializePage() {
+      collectElements();
+      buildBadgeVariants();
+      renderAllBadges();
+    }
+
+    ensureSheetsForBadges();
+    initializePage();
+    csvStatus.textContent = `Loaded ${csvSeedRows.length} CSV row${csvSeedRows.length === 1 ? "" : "s"} into ${badges.length} slot${badges.length === 1 ? "" : "s"}.`;
+
+    document.getElementById("import-csv-text").addEventListener("click", importCsvText);
+
+    csvTextInput.addEventListener("input", () => {
+      csvStatus.textContent = "CSV rows changed. Click Import CSV text to update badges.";
+    });
+
+    document.getElementById("load-sample-csv").addEventListener("click", () => {
+      csvTextInput.value = sampleCsvRows;
+      csvStatus.textContent = "Sample rows loaded. Click Import CSV text to update badges.";
+    });
+
+    document.getElementById("clear-csv-text").addEventListener("click", () => {
+      csvTextInput.value = "";
+      csvStatus.textContent = "CSV rows cleared.";
+    });
+
+    document.getElementById("print-button").addEventListener("click", () => {
+      window.print();
+    });
+
+    document.getElementById("toggle-guides").addEventListener("click", (event) => {
+      document.body.classList.toggle("hide-guides");
+      event.target.textContent = document.body.classList.contains("hide-guides")
+        ? "Show cut lines"
+        : "Hide cut lines";
+    });
+
+    document.getElementById("reset-edits").addEventListener("click", () => {
+      localStorage.removeItem(badgeStorageKey);
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>
